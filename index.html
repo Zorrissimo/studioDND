@@ -6,460 +6,7 @@
   <title>studioDND</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --navy:    #0f1f3d;
-      --navy2:   #1a3560;
-      --accent:  #2563eb;
-      --accent2: #60a5fa;
-      --light:   #f4f6fb;
-      --white:   #ffffff;
-      --text:    #1e2d4d;
-      --muted:   #637496;
-      --border:  #d9e2f0;
-      --radius:  12px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--white);
-      color: var(--text);
-      line-height: 1.65;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 5%;
-      height: 68px;
-    }
-
-    .logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.35rem;
-      color: var(--navy);
-      letter-spacing: -0.02em;
-    }
-    .logo span { color: var(--accent); }
-
-    nav ul {
-      list-style: none;
-      display: flex; gap: 2.2rem;
-    }
-    nav ul a {
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      transition: color .2s;
-    }
-    nav ul a:hover { color: var(--navy); }
-
-    .nav-cta {
-      background: var(--navy);
-      color: var(--white) !important;
-      padding: 9px 22px;
-      border-radius: 50px;
-      transition: background .2s !important;
-    }
-    .nav-cta:hover { background: var(--accent) !important; color: var(--white) !important; }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #1e4080 100%);
-      display: flex; align-items: center;
-      padding: 0 5%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(circle at 80% 20%, rgba(96,165,250,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 15% 80%, rgba(37,99,235,0.15) 0%, transparent 45%);
-    }
-
-    /* grid pattern */
-    .hero::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      position: relative; z-index: 1;
-      max-width: 700px;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent2);
-      border: 1px solid rgba(96,165,250,0.35);
-      padding: 6px 16px;
-      border-radius: 50px;
-      margin-bottom: 2rem;
-      animation: fadeUp .7s ease both;
-    }
-
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.6rem, 5.5vw, 4rem);
-      color: var(--white);
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.4rem;
-      animation: fadeUp .7s .15s ease both;
-    }
-    .hero h1 em { color: var(--accent2); font-style: italic; }
-
-    .hero p {
-      font-size: 1.08rem;
-      color: rgba(255,255,255,0.72);
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-      animation: fadeUp .7s .3s ease both;
-    }
-
-    .hero-btns {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      animation: fadeUp .7s .42s ease both;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: var(--white);
-      padding: 14px 30px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 20px rgba(37,99,235,0.4);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,99,235,0.5); }
-
-    .btn-ghost {
-      background: rgba(255,255,255,0.1);
-      color: var(--white);
-      padding: 14px 30px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: background .2s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,0.18); }
-
-    /* ── SECTION BASE ── */
-    section { padding: 90px 5%; }
-
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.8rem;
-    }
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-      color: var(--navy);
-      line-height: 1.18;
-      letter-spacing: -0.025em;
-      margin-bottom: 1.2rem;
-    }
-    .section-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 560px;
-    }
-
-    /* ── SERVICES ── */
-    #servizi { background: var(--light); }
-
-    .services-header { margin-bottom: 3.5rem; }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 1.6rem;
-    }
-
-    .service-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem 1.8rem;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
-      position: relative;
-      overflow: hidden;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0); transform-origin: left;
-      transition: transform .3s ease;
-    }
-    .service-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(15,31,61,0.1); border-color: #b8cdf0; }
-    .service-card:hover::before { transform: scaleX(1); }
-
-    .service-icon {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--navy), var(--navy2));
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.3rem;
-      font-size: 1.5rem;
-    }
-
-    .service-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem;
-      color: var(--navy);
-      margin-bottom: 0.6rem;
-      line-height: 1.25;
-    }
-
-    .service-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .service-tags {
-      margin-top: 1.1rem;
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-    }
-    .tag {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      background: var(--light);
-      color: var(--accent);
-      border: 1px solid #c7d9f5;
-      padding: 3px 10px;
-      border-radius: 50px;
-    }
-
-    /* ── PROJECTS ── */
-    #progetti { background: var(--white); }
-
-    .projects-header { margin-bottom: 3.5rem; }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.8rem;
-    }
-
-    .project-card {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .project-card:hover { transform: translateY(-4px); box-shadow: 0 14px 38px rgba(15,31,61,0.1); }
-
-    .project-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: linear-gradient(135deg, #e8eef8 0%, #d0dcf0 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-thumb::after {
-      content: 'Preview';
-      position: absolute;
-      bottom: 12px; right: 12px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      background: rgba(255,255,255,0.85);
-      padding: 4px 12px;
-      border-radius: 50px;
-    }
-
-    .project-body { padding: 1.4rem; }
-    .project-body h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--navy);
-      margin-bottom: 0.4rem;
-    }
-    .project-body p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; }
-
-    .project-link {
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--accent);
-      display: inline-flex; align-items: center; gap: 5px;
-      transition: gap .2s;
-    }
-    .project-link:hover { gap: 9px; }
-
-    /* ── ABOUT ── */
-    #about {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    #about .section-label { color: var(--accent2); }
-    #about .section-title { color: var(--white); }
-    #about .section-sub { color: rgba(255,255,255,0.65); max-width: 100%; }
-
-    .about-text p {
-      color: rgba(255,255,255,0.7);
-      font-size: 1rem;
-      margin-top: 1.2rem;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
-    }
-
-    .stat-box {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-    }
-    .stat-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.4rem;
-      color: var(--accent2);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-    .stat-label {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.5);
-      font-weight: 500;
-    }
-
-    /* ── CONTACT ── */
-    #contatti { background: var(--light); }
-
-    .contact-wrapper {
-      max-width: 640px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .contact-wrapper .section-title { margin-bottom: 0.8rem; }
-    .contact-wrapper .section-sub { margin: 0 auto 2.5rem; }
-
-    .contact-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 8px;
-      background: var(--light);
-      text-align: left;
-    }
-
-    .contact-icon {
-      font-size: 1.4rem;
-      width: 44px; height: 44px;
-      background: var(--navy);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .contact-info span {
-      display: block;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2px;
-    }
-    .contact-info a, .contact-info p {
-      font-size: 0.95rem;
-      color: var(--navy);
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .contact-info a:hover { color: var(--accent); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy);
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 2rem 5%;
-      font-size: 0.83rem;
-    }
-    footer strong { color: rgba(255,255,255,0.7); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -479,7 +26,7 @@
   <div class="hero-inner">
     <div class="hero-tag">⚙️ studioDND — Ingegneria & Automazione Industriale</div>
     <h1>Soluzioni tecniche<br /><em>su misura</em> per<br />ogni sfida.</h1>
-    <p>Progettazione hardware e software per automazione industriale, sistemi embedded, microservizi web e progettazione meccanica. Competenza, precisione e affidabilità.</p>
+    <p>Progettazione hardware e software per automazione industriale, sistemi embedded, microservizi web e digital twin. Competenza, precisione e affidabilità.</p>
     <div class="hero-btns">
       <a href="#servizi" class="btn-primary">Scopri i servizi</a>
       <a href="#contatti" class="btn-ghost">Parliamone →</a>
@@ -487,12 +34,12 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- SERVIZI -->
 <section id="servizi">
   <div class="services-header reveal">
     <div class="section-label">Cosa faccio</div>
     <div class="section-title">Servizi principali</div>
-    <p class="section-sub">Un insieme completo di competenze tecniche che coprono hardware, software e meccanica.</p>
+    <p class="section-sub">Un insieme completo di competenze tecniche che coprono hardware, software ed elettronica.</p>
   </div>
 
   <div class="services-grid">
@@ -564,9 +111,8 @@
 
   </div>
 </section>
-<!-- Progetti e foto da caricare 
-  
-<!-- PROJECTS -->
+
+<!-- PROGETTI -->
 <section id="progetti">
   <div class="projects-header reveal">
     <div class="section-label">Portfolio</div>
@@ -605,14 +151,14 @@
 
   </div>
 </section>
--->
-<!-- ABOUT -->
+
+<!-- CHI SONO -->
 <section id="about">
   <div class="about-grid">
     <div class="about-text reveal">
       <div class="section-label">Chi sono</div>
       <div class="section-title">Esperienza tecnica,<br />approccio pratico.</div>
-      <p>Sono un ingegnere specializzato nell'integrazione tra hardware, software e meccanica, con anni di esperienza nel settore dell'automazione industriale e dei sistemi embedded.</p>
+      <p>Sono un ingegnere specializzato nell'integrazione tra hardware, software ed elettronica, con anni di esperienza nel settore dell'automazione industriale e dei sistemi embedded.</p>
       <p>Collaboro con aziende di ogni dimensione, dalla PMI alla grande industria, per trovare soluzioni tecniche efficienti, affidabili e manutenibili nel tempo.</p>
     </div>
     <div class="stats-grid reveal">
@@ -636,7 +182,7 @@
   </div>
 </section>
 
-<!-- CONTACTS -->
+<!-- CONTATTI -->
 <section id="contatti">
   <div class="contact-wrapper">
     <div class="section-label reveal">Contatti</div>
@@ -648,28 +194,28 @@
         <div class="contact-icon">📧</div>
         <div class="contact-info">
           <span>Email</span>
-          <a href="mailto:dinodinella85@yahoo.it">dinodinella85@yahoo.it</a>
+          <a href="mailto:info@tuodominio.it">info@tuodominio.it</a>
         </div>
       </div>
       <div class="contact-row">
         <div class="contact-icon">📞</div>
         <div class="contact-info">
           <span>Telefono</span>
-          <a href="tel:+393484380933">+39 348 438 0933</a>
+          <a href="tel:+390000000000">+39 000 000 0000</a>
         </div>
       </div>
       <div class="contact-row">
         <div class="contact-icon">📍</div>
         <div class="contact-info">
           <span>Sede</span>
-          <p>Lanciano, Italia</p>
+          <p>Pescara, Italia</p>
         </div>
       </div>
       <div class="contact-row">
         <div class="contact-icon">💼</div>
         <div class="contact-info">
           <span>LinkedIn</span>
-          <a href="https://www.linkedin.com/in/dino-di-nella-2864108a/" target="_blank/> Il mio profilo linkedin</a>
+          <a href="https://linkedin.com" target="_blank">linkedin.com/in/tuoprofilo</a>
         </div>
       </div>
     </div>
